@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get, child, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, set, get, child, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -82,6 +82,7 @@ window.loginAdmin = async function() {
         document.getElementById('login').style.display = 'none';
         if (document.getElementById('registro')) {
             document.getElementById('registro').style.display = 'block';
+            cargarUsuarios();
         } else if (document.getElementById('crearVotacion')) {
             document.getElementById('crearVotacion').style.display = 'block';
             mostrarVotacionActual();
@@ -111,6 +112,49 @@ window.registrarUsuario = async function() {
             id: nuevoUsuario
         });
         alert("Usuario registrado exitosamente.");
+        cargarUsuarios();
+    }
+};
+
+// Función para cargar los usuarios en la tabla
+async function cargarUsuarios() {
+    const dbRef = ref(db);
+    const usuariosSnapshot = await get(child(dbRef, 'usuarios'));
+    const tbody = document.getElementById('tablaUsuarios').getElementsByTagName('tbody')[0];
+    tbody.innerHTML = ''; // Limpiar la tabla antes de cargar los datos
+
+    usuariosSnapshot.forEach((childSnapshot) => {
+        const usuario = childSnapshot.key;
+        const row = tbody.insertRow();
+        const cellUsuario = row.insertCell(0);
+        const cellAcciones = row.insertCell(1);
+
+        cellUsuario.textContent = usuario;
+        cellAcciones.innerHTML = `
+            <button onclick="editarUsuario('${usuario}')">Editar</button>
+            <button onclick="borrarUsuario('${usuario}')">Borrar</button>
+        `;
+    });
+}
+
+// Función para editar un usuario
+window.editarUsuario = async function(usuario) {
+    const nuevaContrasena = prompt("Ingrese la nueva contraseña para " + usuario);
+    if (nuevaContrasena) {
+        await update(ref(db, `usuarios/${usuario}`), {
+            contrasena: nuevaContrasena
+        });
+        alert("Contraseña actualizada exitosamente.");
+        cargarUsuarios();
+    }
+};
+
+// Función para borrar un usuario
+window.borrarUsuario = async function(usuario) {
+    if (confirm("¿Está seguro de que desea borrar el usuario " + usuario + "?")) {
+        await remove(ref(db, `usuarios/${usuario}`));
+        alert("Usuario borrado exitosamente.");
+        cargarUsuarios();
     }
 };
 
