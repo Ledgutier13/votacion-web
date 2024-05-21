@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <title>Registro de Nuevo Usuario</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Registro</h1>
+        <h1>Registro de Nuevo Usuario</h1>
         <div id="login">
-            <input type="text" id="adminUsuario" placeholder="Usuario Admin">
+            <input type="text" id="adminUsuario" placeholder="Nombre de Usuario Admin">
             <input type="password" id="adminContrasena" placeholder="Contraseña Admin">
-            <button onclick="loginAdmin()">Login</button>
+            <button onclick="loginAdmin()">Ingresar</button>
         </div>
         <div id="registro" style="display:none;">
-            <input type="text" id="nuevoUsuario" placeholder="Nuevo Usuario">
+            <input type="text" id="nuevoUsuario" placeholder="Nuevo Nombre de Usuario">
             <input type="password" id="nuevaContrasena" placeholder="Nueva Contraseña">
-            <button onclick="registrarUsuario()">Registrar</button>
-            <button onclick="location.href='index.html'">Volver</button>
+            <button onclick="registrarUsuario()">Registrar Usuario</button>
+            <button onclick="location.href='index.html'">Volver a la Página Principal</button>
         </div>
     </div>
     <script type="module" src="app.js"></script>
