@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Participa en la Votación</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -17,11 +17,20 @@
         </div>
         <div id="votacion" style="display:none;">
             <h2 id="titulo"></h2>
-            <p id="descripcion"></p>
+            <div class="divider"></div>
+            <h3 id="descripcion"></h3>
             <button onclick="seleccionarOpcion('si')">Sí</button>
             <button onclick="seleccionarOpcion('no')">No</button>
             <button onclick="seleccionarOpcion('abstencion')">Abstenerse</button>
-            <button onclick="votar()">Enviar Voto</button>
+            <button id="votar-button" onclick="votar()">Enviar Voto</button>
+            <a href="index.html" style="display: block; margin-top: 20px; color: #4CAF50;">Volver a la página principal</a>
+        </div>
+    </div>
+    <!-- Cuadro de diálogo (modal) -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <p id="modal-texto"></p>
         </div>
     </div>
     <script type="module" src="app.js"></script>
