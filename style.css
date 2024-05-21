@@ -1,6 +1,9 @@
+/* Importar la fuente Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 /* Estilos generales */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
@@ -30,6 +33,26 @@ h1 {
     margin: -20px -20px 20px -20px;
     font-size: 2.5em;
     border-radius: 10px 10px 0 0;
+}
+
+h2 {
+    font-size: 1.8em;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+h3 {
+    font-size: 1em; /* Tamaño más pequeño para el subtítulo */
+    font-weight: 400;
+    margin: 10px 0;
+    color: #666;
+}
+
+.divider {
+    width: 50%;
+    height: 2px;
+    background-color: #4CAF50;
+    margin: 10px auto;
 }
 
 button {
@@ -94,8 +117,8 @@ textarea {
 }
 
 #votar-button.selected {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #4CAF50 !important;
+    color: white !important;
 }
 
 /* Estilos específicos para index.html */
@@ -109,6 +132,7 @@ textarea {
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px; /* Más espacio debajo del botón "Votar Ahora" */
 }
 
 #index-button:hover {
@@ -201,3 +225,4 @@ th {
         padding: 10px;
     }
 }
+
