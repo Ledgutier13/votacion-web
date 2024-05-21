@@ -199,4 +199,17 @@ async function mostrarResultados() {
             }
         }
     });
+
+    let mensajeResultado = '';
+    if (si > no && si > abstencion) {
+        mensajeResultado = 'La propuesta ha sido aprobada.';
+    } else if (no > si && no > abstencion) {
+        mensajeResultado = 'La propuesta ha sido rechazada.';
+    } else if (si === no) {
+        mensajeResultado = 'Hay un empate entre sí y no.';
+    } else {
+        mensajeResultado = 'No hay una decisión clara.';
+    }
+
+    document.getElementById('mensajeResultado').innerText = mensajeResultado;
 }
