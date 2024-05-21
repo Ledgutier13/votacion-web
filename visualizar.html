@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizar Votación</title>
+    <title>Resultados de la Votación</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Visualizar Votación</h1>
+        <h1>Resultados de la Votación</h1>
         <div id="login">
-            <input type="text" id="adminUsuario" placeholder="Usuario Admin">
+            <input type="text" id="adminUsuario" placeholder="Nombre de Usuario Admin">
             <input type="password" id="adminContrasena" placeholder="Contraseña Admin">
-            <button onclick="loginAdmin()">Login</button>
+            <button onclick="loginAdmin()">Ingresar</button>
         </div>
         <div id="resultados" style="display:none;">
             <canvas id="grafica"></canvas>
             <p id="mensajeResultado"></p>
-            <button onclick="location.href='index.html'">Volver</button>
+            <button onclick="location.href='index.html'">Volver a la Página Principal</button>
         </div>
     </div>
     <script type="module" src="app.js"></script>
