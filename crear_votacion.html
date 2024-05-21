@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Votación</title>
+    <title>Crear Nueva Votación</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Crear Votación</h1>
+        <h1>Crear Nueva Votación</h1>
         <div id="login">
-            <input type="text" id="adminUsuario" placeholder="Usuario Admin">
+            <input type="text" id="adminUsuario" placeholder="Nombre de Usuario Admin">
             <input type="password" id="adminContrasena" placeholder="Contraseña Admin">
-            <button onclick="loginAdmin()">Login</button>
+            <button onclick="loginAdmin()">Ingresar</button>
         </div>
         <div id="crearVotacion" style="display:none;">
             <h2>Votación Actual</h2>
@@ -21,9 +21,9 @@
             <p id="votacionActualSubtitulo">Descripción: No hay datos</p>
             <input type="text" id="tituloVotacion" placeholder="Título de la Votación">
             <textarea id="descripcionVotacion" placeholder="Descripción de la Votación"></textarea>
-            <button onclick="crearVotacion()">Crear</button>
-            <button onclick="borrarVotacion()">Borrar</button>
-            <button onclick="location.href='index.html'">Volver</button>
+            <button onclick="crearVotacion()">Crear Votación</button>
+            <button onclick="borrarVotacion()">Borrar Votación</button>
+            <button onclick="location.href='index.html'">Volver a la Página Principal</button>
         </div>
     </div>
     <script type="module" src="app.js"></script>
