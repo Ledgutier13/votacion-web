@@ -47,6 +47,7 @@ window.loginUsuario = async function() {
                 mostrarModal("Lo siento, no hay votación actualmente.");
                 location.href = 'index.html';
             } else {
+                document.getElementById('mensajeBienvenida').innerHTML = `Hola, <span class="nombre">${snapshot.val().nombre}</span>, realiza tu voto...`;
                 document.getElementById('titulo').innerText = votacionSnapshot.val().titulo;
                 document.getElementById('descripcion').innerText = votacionSnapshot.val().subtitulo;
             }
@@ -109,6 +110,7 @@ window.loginAdmin = async function() {
 
 // Función para registrar un nuevo usuario
 window.registrarUsuario = async function() {
+    const nombreCompleto = document.getElementById('nombreCompleto').value;
     const nuevoUsuario = document.getElementById('nuevoUsuario').value;
     const nuevaContrasena = document.getElementById('nuevaContrasena').value;
 
@@ -119,6 +121,7 @@ window.registrarUsuario = async function() {
         mostrarModal("El usuario ya existe.");
     } else {
         await set(ref(db, `usuarios/${nuevoUsuario}`), {
+            nombre: nombreCompleto,
             contrasena: nuevaContrasena,
             havotado: false,
             id: nuevoUsuario
