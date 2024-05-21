@@ -20,6 +20,20 @@
             <input type="password" id="nuevaContrasena" placeholder="Nueva Contraseña">
             <button onclick="registrarUsuario()">Registrar Usuario</button>
             <button onclick="location.href='index.html'">Volver a la Página Principal</button>
+            <h2>Usuarios Registrados</h2>
+            <div style="overflow-x:auto;">
+                <table id="tablaUsuarios">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los usuarios se cargarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <script type="module" src="app.js"></script>
