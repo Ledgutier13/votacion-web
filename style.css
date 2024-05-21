@@ -20,7 +20,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+    max-width: 600px; /* Hacer el contenedor más ancho */
     width: 100%;
     margin: 20px;
     box-sizing: border-box;
@@ -205,6 +205,19 @@ th {
     cursor: pointer;
 }
 
+/* Estilos para el mensaje de bienvenida */
+#mensajeBienvenida {
+    font-size: 1em;
+    font-weight: 400;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#mensajeBienvenida .nombre {
+    color: #2196F3;
+    font-weight: 600;
+}
+
 /* Media queries para dispositivos móviles */
 @media (max-width: 600px) {
     h1 {
@@ -225,4 +238,5 @@ th {
         padding: 10px;
     }
 }
+
 
