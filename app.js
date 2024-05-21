@@ -16,6 +16,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+// Función para mostrar el cuadro de diálogo (modal)
+function mostrarModal(mensaje) {
+    document.getElementById('modal-texto').innerText = mensaje;
+    document.getElementById('modal').style.display = 'block';
+}
+
+// Función para cerrar el cuadro de diálogo (modal)
+window.cerrarModal = function() {
+    document.getElementById('modal').style.display = 'none';
+};
+
 // Función para login de usuario
 window.loginUsuario = async function() {
     const usuario = document.getElementById('usuario').value;
@@ -26,14 +37,14 @@ window.loginUsuario = async function() {
 
     if (snapshot.exists() && snapshot.val().contrasena === contrasena) {
         if (snapshot.val().havotado) {
-            alert("Ya has votado.");
+            mostrarModal("Usted ya ha votado.");
             location.href = 'index.html';
         } else {
             document.getElementById('login').style.display = 'none';
             document.getElementById('votacion').style.display = 'block';
             const votacionSnapshot = await get(child(dbRef, 'votacion/dequetrata'));
             if (votacionSnapshot.val().titulo === "No hay datos") {
-                alert("Lo siento, no hay votación actualmente.");
+                mostrarModal("Lo siento, no hay votación actualmente.");
                 location.href = 'index.html';
             } else {
                 document.getElementById('titulo').innerText = votacionSnapshot.val().titulo;
@@ -41,7 +52,7 @@ window.loginUsuario = async function() {
             }
         }
     } else {
-        alert("Usuario o contraseña incorrectos.");
+        mostrarModal("Usuario o contraseña incorrectos.");
     }
 };
 
@@ -51,6 +62,7 @@ window.seleccionarOpcion = function(opcion) {
     botones.forEach(boton => boton.classList.remove('selected'));
     document.querySelector(`#votacion button[onclick="seleccionarOpcion('${opcion}')"]`).classList.add('selected');
     window.voto = opcion;
+    document.getElementById('votar-button').classList.add('selected');
 };
 
 // Función para registrar el voto
@@ -63,10 +75,10 @@ window.votar = async function() {
         updates[`usuarios/${usuario}/havotado`] = true;
         updates[`votacion/${window.voto}`] = (await get(child(dbRef, `votacion/${window.voto}`))).val() + 1;
         await update(dbRef, updates);
-        alert("Gracias por su voto!");
+        mostrarModal("Gracias por su voto!");
         location.href = 'index.html';
     } else {
-        alert("Por favor, seleccione una opción para votar.");
+        mostrarModal("Por favor, seleccione una opción para votar.");
     }
 };
 
@@ -91,7 +103,7 @@ window.loginAdmin = async function() {
             mostrarResultados();
         }
     } else {
-        alert("Usuario o contraseña incorrectos.");
+        mostrarModal("Usuario o contraseña incorrectos.");
     }
 };
 
@@ -104,14 +116,14 @@ window.registrarUsuario = async function() {
     const snapshot = await get(child(dbRef, `usuarios/${nuevoUsuario}`));
 
     if (snapshot.exists()) {
-        alert("El usuario ya existe.");
+        mostrarModal("El usuario ya existe.");
     } else {
         await set(ref(db, `usuarios/${nuevoUsuario}`), {
             contrasena: nuevaContrasena,
             havotado: false,
             id: nuevoUsuario
         });
-        alert("Usuario registrado exitosamente.");
+        mostrarModal("Usuario registrado exitosamente.");
         cargarUsuarios();
     }
 };
@@ -144,7 +156,7 @@ window.editarUsuario = async function(usuario) {
         await update(ref(db, `usuarios/${usuario}`), {
             contrasena: nuevaContrasena
         });
-        alert("Contraseña actualizada exitosamente.");
+        mostrarModal("Contraseña actualizada exitosamente.");
         cargarUsuarios();
     }
 };
@@ -153,7 +165,7 @@ window.editarUsuario = async function(usuario) {
 window.borrarUsuario = async function(usuario) {
     if (confirm("¿Está seguro de que desea borrar el usuario " + usuario + "?")) {
         await remove(ref(db, `usuarios/${usuario}`));
-        alert("Usuario borrado exitosamente.");
+        mostrarModal("Usuario borrado exitosamente.");
         cargarUsuarios();
     }
 };
@@ -179,7 +191,7 @@ window.crearVotacion = async function() {
         update(ref(db, `usuarios/${childSnapshot.key}`), { havotado: false });
     });
 
-    alert("Votación creada exitosamente.");
+    mostrarModal("Votación creada exitosamente.");
     location.href = 'index.html';
 };
 
@@ -210,7 +222,7 @@ window.borrarVotacion = async function() {
         update(ref(db, `usuarios/${childSnapshot.key}`), { havotado: false });
     });
 
-    alert("Votación borrada exitosamente.");
+    mostrarModal("Votación borrada exitosamente.");
     mostrarVotacionActual();
 };
 
