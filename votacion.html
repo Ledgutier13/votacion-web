@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votación</title>
+    <title>Participa en la Votación</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Votación</h1>
+        <h1>Participa en la Votación</h1>
         <div id="login">
-            <input type="text" id="usuario" placeholder="Usuario">
+            <input type="text" id="usuario" placeholder="Nombre de Usuario">
             <input type="password" id="contrasena" placeholder="Contraseña">
-            <button onclick="loginUsuario()">Login</button>
+            <button onclick="loginUsuario()">Ingresar</button>
         </div>
         <div id="votacion" style="display:none;">
             <h2 id="titulo"></h2>
@@ -21,7 +21,7 @@
             <button onclick="seleccionarOpcion('si')">Sí</button>
             <button onclick="seleccionarOpcion('no')">No</button>
             <button onclick="seleccionarOpcion('abstencion')">Abstenerse</button>
-            <button onclick="votar()">Votar</button>
+            <button onclick="votar()">Enviar Voto</button>
         </div>
     </div>
     <script type="module" src="app.js"></script>
