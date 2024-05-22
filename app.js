@@ -332,6 +332,7 @@ async function mostrarResultados() {
 async function mostrarVotacionActual() {
     const dbRef = ref(db);
     const votacionSnapshot = await get(child(dbRef, 'votacion/dequetrata'));
+    const usuariosSnapshot = await get(child(dbRef, 'usuarios'));
 
     if (votacionSnapshot.exists() && votacionSnapshot.val().titulo !== "No hay datos") {
         document.getElementById('votacionActualTitulo').innerText = `Título: ${votacionSnapshot.val().titulo}`;
@@ -340,4 +341,17 @@ async function mostrarVotacionActual() {
         document.getElementById('votacionActualTitulo').innerText = "Título: No hay datos";
         document.getElementById('votacionActualSubtitulo').innerText = "Descripción: No hay datos";
     }
+
+    const totalUsuarios = usuariosSnapshot.size;
+    let usuariosQueHanVotado = 0;
+
+    usuariosSnapshot.forEach((childSnapshot) => {
+        if (childSnapshot.val().havotado) {
+            usuariosQueHanVotado++;
+        }
+    });
+
+    const porcentajeVotacion = totalUsuarios > 0 ? (usuariosQueHanVotado / totalUsuarios) * 100 : 0;
+    document.getElementById('estadisticasVotacion').innerHTML = `Esta votación ha sido votada por el <span style="color: red;">${porcentajeVotacion.toFixed(2)}%</span> de los usuarios (<span style="color: red;">${usuariosQueHanVotado}</span> de <span style="color: red;">${totalUsuarios}</span>).`;
 }
+
