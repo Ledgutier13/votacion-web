@@ -250,6 +250,6 @@ th {
 
     #votacion button {
         width: 80%;
-        margin: 10px 0;
+        margin: 10px auto;
     }
 }
