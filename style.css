@@ -106,11 +106,13 @@ textarea {
     display: flex;
     justify-content: space-around;
     margin: 20px 0;
+    flex-wrap: wrap; /* Permitir que los botones se ajusten en una fila */
 }
 
 #votacion button {
     width: 30%;
     max-width: 150px;
+    margin: 5px; /* Añadir margen para evitar que se peguen entre sí */
 }
 
 #votacion button.selected {
@@ -245,12 +247,13 @@ th {
     }
 
     #votacion .botones-opciones {
-        flex-direction: column;
+        flex-direction: row; /* Mantener los botones en una fila horizontal */
+        flex-wrap: nowrap; /* Evitar que los botones se ajusten en una columna */
     }
 
     #votacion button {
-        width: 80%;
-        margin: 10px 0;
+        width: 30%;
+        margin: 5px; /* Añadir margen para evitar que se peguen entre sí */
     }
 }
 
