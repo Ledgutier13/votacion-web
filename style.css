@@ -66,6 +66,7 @@ button {
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 80%;
+    text-align: center; /* Asegurar que el texto esté centrado */
 }
 
 button:hover {
@@ -122,6 +123,11 @@ textarea {
 
 #votacion button:not(.selected):hover {
     background-color: #ddd;
+}
+
+#votar-button {
+    width: 50%; /* Ajustar el ancho del botón "Enviar Voto" */
+    max-width: 200px;
 }
 
 #votar-button.selected {
@@ -254,6 +260,11 @@ th {
     #votacion button {
         width: 30%;
         margin: 5px; /* Añadir margen para evitar que se peguen entre sí */
+    }
+
+    #votar-button {
+        width: 50%; /* Ajustar el ancho del botón "Enviar Voto" */
+        max-width: 200px;
     }
 }
 
