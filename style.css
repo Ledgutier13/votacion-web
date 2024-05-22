@@ -102,9 +102,15 @@ textarea {
     height: 100px;
 }
 
+#votacion .botones-opciones {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
 #votacion button {
-    width: 80%;
-    max-width: 300px;
+    width: 30%;
+    max-width: 150px;
 }
 
 #votacion button.selected {
@@ -237,6 +243,14 @@ th {
     .container {
         padding: 10px;
     }
-}
 
+    #votacion .botones-opciones {
+        flex-direction: column;
+    }
+
+    #votacion button {
+        width: 80%;
+        margin: 10px 0;
+    }
+}
 
