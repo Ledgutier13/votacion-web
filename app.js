@@ -27,6 +27,80 @@ window.cerrarModal = function() {
     document.getElementById('modal').style.display = 'none';
 };
 
+// Función para generar un código aleatorio
+function generarCodigoAleatorio() {
+    return `VOTACION-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+}
+
+// Función para crear una nueva votación
+window.crearVotacion = async function() {
+    const titulo = document.getElementById('tituloVotacion').value;
+    const descripcion = document.getElementById('descripcionVotacion').value;
+
+    await set(ref(db, 'votacion'), {
+        si: 0,
+        no: 0,
+        abstencion: 0,
+        dequetrata: {
+            subtitulo: descripcion,
+            titulo: titulo,
+            codigo: "",
+            codigousado: false,
+            generacion: false
+        }
+    });
+
+    const dbRef = ref(db);
+    const usuariosSnapshot = await get(child(dbRef, 'usuarios'));
+    usuariosSnapshot.forEach((childSnapshot) => {
+        update(ref(db, `usuarios/${childSnapshot.key}`), { havotado: false });
+    });
+
+    mostrarModal("Votación creada exitosamente.");
+    location.href = 'index.html';
+};
+
+
+// Función para generar un código aleatorio
+window.generarCodigo = async function() {
+    const dbRef = ref(db);
+    const votacionSnapshot = await get(child(dbRef, 'votacion/dequetrata'));
+
+    if (votacionSnapshot.exists() && votacionSnapshot.val().titulo !== "No hay datos") {
+        if (votacionSnapshot.val().generacion) {
+            mostrarModal("Ya se ha generado un código para esta votación.");
+        } else {
+            const codigo = generarCodigoAleatorio();
+            await update(ref(db, 'votacion/dequetrata'), {
+                codigo: codigo,
+                generacion: true,
+                codigousado: false
+            });
+            document.getElementById('codigoGenerado').innerText = `Código Generado: ${codigo}`;
+        }
+    } else {
+        mostrarModal("No hay votación activa.");
+    }
+};
+
+// Función para verificar el código
+window.validarCodigo = async function() {
+    const codigoIngresado = document.getElementById('codigoIngresado').value;
+    const dbRef = ref(db);
+    const votacionSnapshot = await get(child(dbRef, 'votacion/dequetrata'));
+
+    if (votacionSnapshot.exists() && votacionSnapshot.val().codigo === codigoIngresado && !votacionSnapshot.val().codigousado) {
+        await update(ref(db, 'votacion/dequetrata'), { codigousado: true });
+        document.getElementById('codigoSection').style.display = 'none';
+        document.getElementById('resultados').style.display = 'block';
+        mostrarResultados();
+    } else {
+        mostrarModal("Código inválido o ya usado.");
+    }
+};
+
+
+
 // Función para login de usuario
 window.loginUsuario = async function() {
     const usuario = document.getElementById('usuario').value;
@@ -34,18 +108,23 @@ window.loginUsuario = async function() {
 
     const dbRef = ref(db);
     const snapshot = await get(child(dbRef, `usuarios/${usuario}`));
+    const votacionSnapshot = await get(child(dbRef, 'votacion/dequetrata'));
+
+    if (votacionSnapshot.exists() && votacionSnapshot.val().codigousado) {
+        mostrarModal("Lo siento, la votación ha terminado con la verificación de los resultados.");
+        return;
+    }
 
     if (snapshot.exists() && snapshot.val().contrasena === contrasena) {
         if (snapshot.val().havotado) {
             mostrarModal("Usted ya ha votado.");
-            location.href = 'index.html';
+            return;
         } else {
             document.getElementById('login').style.display = 'none';
             document.getElementById('votacion').style.display = 'block';
-            const votacionSnapshot = await get(child(dbRef, 'votacion/dequetrata'));
             if (votacionSnapshot.val().titulo === "No hay datos") {
                 mostrarModal("Lo siento, no hay votación actualmente.");
-                location.href = 'index.html';
+                return;
             } else {
                 document.getElementById('mensajeBienvenida').innerHTML = `Hola, <span class="nombre">${snapshot.val().nombre}</span>, realiza tu voto...`;
                 document.getElementById('titulo').innerText = votacionSnapshot.val().titulo;
@@ -56,6 +135,14 @@ window.loginUsuario = async function() {
         mostrarModal("Usuario o contraseña incorrectos.");
     }
 };
+
+// Función para cerrar el cuadro de diálogo (modal) y redirigir a la página de inicio
+window.cerrarModal = function() {
+    document.getElementById('modal').style.display = 'none';
+    location.href = 'index.html';
+};
+
+
 
 // Función para seleccionar una opción de voto
 window.seleccionarOpcion = function(opcion) {
@@ -173,40 +260,6 @@ window.borrarUsuario = async function(usuario) {
     }
 };
 
-// Función para crear una nueva votación
-window.crearVotacion = async function() {
-    const titulo = document.getElementById('tituloVotacion').value;
-    const descripcion = document.getElementById('descripcionVotacion').value;
-
-    await set(ref(db, 'votacion'), {
-        si: 0,
-        no: 0,
-        abstencion: 0,
-        dequetrata: {
-            subtitulo: descripcion,
-            titulo: titulo
-        }
-    });
-
-    const dbRef = ref(db);
-    const usuariosSnapshot = await get(child(dbRef, 'usuarios'));
-    usuariosSnapshot.forEach((childSnapshot) => {
-        update(ref(db, `usuarios/${childSnapshot.key}`), { havotado: false });
-    });
-
-    mostrarModal("Votación creada exitosamente.");
-    location.href = 'index.html';
-};
-
-// Función para mostrar la votación actual
-async function mostrarVotacionActual() {
-    const dbRef = ref(db);
-    const votacionSnapshot = await get(child(dbRef, 'votacion/dequetrata'));
-
-    document.getElementById('votacionActualTitulo').innerText = `Título: ${votacionSnapshot.val().titulo}`;
-    document.getElementById('votacionActualSubtitulo').innerText = `Descripción: ${votacionSnapshot.val().subtitulo}`;
-}
-
 // Función para borrar la votación
 window.borrarVotacion = async function() {
     await set(ref(db, 'votacion'), {
@@ -215,7 +268,10 @@ window.borrarVotacion = async function() {
         abstencion: 0,
         dequetrata: {
             subtitulo: "No hay datos",
-            titulo: "No hay datos"
+            titulo: "No hay datos",
+            codigo: "",
+            codigousado: false,
+            generacion: false
         }
     });
 
@@ -272,4 +328,16 @@ async function mostrarResultados() {
 
     document.getElementById('mensajeResultado').innerText = mensajeResultado;
 }
+// Función para mostrar la votación actual
+async function mostrarVotacionActual() {
+    const dbRef = ref(db);
+    const votacionSnapshot = await get(child(dbRef, 'votacion/dequetrata'));
 
+    if (votacionSnapshot.exists() && votacionSnapshot.val().titulo !== "No hay datos") {
+        document.getElementById('votacionActualTitulo').innerText = `Título: ${votacionSnapshot.val().titulo}`;
+        document.getElementById('votacionActualSubtitulo').innerText = `Descripción: ${votacionSnapshot.val().subtitulo}`;
+    } else {
+        document.getElementById('votacionActualTitulo').innerText = "Título: No hay datos";
+        document.getElementById('votacionActualSubtitulo').innerText = "Descripción: No hay datos";
+    }
+}
