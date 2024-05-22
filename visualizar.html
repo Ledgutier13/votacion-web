@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de la Votación</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Resultados de la Votación</h1>
-        <div id="login">
-            <input type="text" id="adminUsuario" placeholder="Nombre de Usuario Admin">
-            <input type="password" id="adminContrasena" placeholder="Contraseña Admin">
-            <button onclick="loginAdmin()">Ingresar</button>
+        <div id="codigoSection">
+            <button onclick="generarCodigo()">Generar Código</button>
+            <p id="codigoGenerado" style="font-size: 1.2em; color: #4CAF50; margin-top: 20px;"></p>
+            <p>El código solo se puede usar una vez durante esta votación.</p>
+            <input type="text" id="codigoIngresado" placeholder="Ingrese el código">
+            <button onclick="validarCodigo()">Validar e Ingresar</button>
         </div>
         <div id="resultados" style="display:none;">
             <canvas id="grafica"></canvas>
