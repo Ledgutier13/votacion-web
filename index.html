@@ -3,17 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Votación en Línea</title>
+    <title>Participa en la Votación</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Sistema de Votación en Línea</h1>
-        <button id="index-button" onclick="location.href='votacion.html'">Votar Ahora</button>
-        <button onclick="location.href='registro.html'">Registrar Usuario</button>
-        <button onclick="location.href='crear_votacion.html'">Crear Nueva Votación</button>
-        <button onclick="location.href='visualizar.html'">Ver Resultados</button>
+        <h1>Participa en la Votación</h1>
+        <div id="login">
+            <input type="text" id="usuario" placeholder="Nombre de Usuario">
+            <input type="password" id="contrasena" placeholder="Contraseña">
+            <button onclick="loginUsuario()">Ingresar</button>
+        </div>
+        <div id="votacion" style="display:none;">
+            <p id="mensajeBienvenida"></p>
+            <div class="divider"></div>
+            <h2 id="titulo"></h2>
+            <div class="divider"></div>
+            <h3 id="descripcion"></h3>
+            <div class="botones-opciones">
+                <button onclick="seleccionarOpcion('si')">Sí</button>
+                <button onclick="seleccionarOpcion('no')">No</button>
+                <button onclick="seleccionarOpcion('abstencion')">Abstenerse</button>
+            </div>
+            <button id="votar-button" onclick="votar()">Enviar Voto</button>
+            <a href="index.html" style="display: block; margin-top: 20px; color: #4CAF50;">Volver a la página principal</a>
+        </div>
     </div>
+    <!-- Cuadro de diálogo (modal) -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <p id="modal-texto"></p>
+        </div>
+    </div>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
