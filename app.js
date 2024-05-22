@@ -272,3 +272,4 @@ async function mostrarResultados() {
 
     document.getElementById('mensajeResultado').innerText = mensajeResultado;
 }
+
